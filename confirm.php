@@ -15,6 +15,50 @@ $qualification1 = $_SESSION['qualification1'];
 $qualification2 = $_SESSION['qualification2'];
 $other = $_SESSION['other'];
 $experience = $_SESSION['experience'];
+$password = $_SESSION['password']; // パスワードを取得
+
+// パスワードを＊マークで隠す
+$hiddenPassword = str_repeat("*", strlen($password));
+
+// データベースに接続（適切な接続情報を設定）
+$host = '127.0.0.1';
+$username = 'yesorno_laravel';
+$password = '59435943'; // パスワードをシングルクォーテーションで囲む
+$database = 'yesorno_users';
+
+$conn = new mysqli($host, $username, $password, $database);
+
+if ($conn->connect_error) {
+    die("データベースへの接続に失敗しました: " . $conn->connect_error);
+}
+
+if (isset($_POST['register'])) {
+    // パスワードをデータベースに格納
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    $sql = "INSERT INTO users (name, address, phone, email, password, birthdate, qualification, qualification1, qualification2, other, experience)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = $conn->prepare($sql);
+
+    if (!$stmt) {
+        die("SQLエラー: " . $conn->error);
+    }
+
+    $stmt->bind_param("ssssssiiisi", $name, $address, $phone, $email, $hashedPassword, $birthdate, $qualification, $qualification1, $qualification2, $other, $experience);
+
+    if ($stmt->execute()) {
+        // レコードが正常に挿入された場合の処理
+        echo "ユーザーが正常に登録されました。";
+    } else {
+        // エラーが発生した場合の処理
+        echo "エラー: " . $stmt->error;
+    }
+
+    $stmt->close();
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -42,6 +86,10 @@ $experience = $_SESSION['experience'];
         <div class="form-row">
             <label for="email">連絡先（E-mail）:</label>
             <?php echo $email; ?>
+        </div>
+        <div class="form-row">
+            <label for="password">パスワード:</label>
+            <?php echo $hiddenPassword; // ＊マークで表示 ?>
         </div>
         <div class="form-row">
             <span class="era-label">生年月日:</span>
