@@ -15,9 +15,7 @@ $qualification1 = $_SESSION['qualification1'];
 $qualification2 = $_SESSION['qualification2'];
 $other = $_SESSION['other'];
 $experience = $_SESSION['experience'];
-$password = $_SESSION['password'];
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -28,7 +26,7 @@ $password = $_SESSION['password'];
 <body>
     <h1>電気工事士登録確認</h1>
     <h2>以下の情報で登録しますか？</h2>
-    <form method="post" action="registration.php">
+    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <div class="form-row">
             <label for="name">氏名:</label>
             <?php echo $name; ?>

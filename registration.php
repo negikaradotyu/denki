@@ -1,13 +1,15 @@
-
-
-
 <?php
 session_start();
 
-$error = "パスワードが一致しません。再入力願います。";
+$error_message = ""; // エラーメッセージを格納する変数
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // パスワードとパスワード確認用が等しくない場合、エラーメッセージを設定
+    if ($_POST['password'] !== $_POST['password_confirm']) {
+        $error_message = "パスワードとパスワード確認が一致しません。";
+    }
+    else {
     // フォームデータをセッションに保存してconfirm.phpに渡す
-    session_start();
     $_SESSION['name'] = $_POST['name'];
     $_SESSION['address'] = $_POST['address'];
     $_SESSION['phone'] = $_POST['phone'];
@@ -34,19 +36,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION['other'] = $_POST['other'];
     $_SESSION['experience'] = $_POST['experience'];
 
-    $password = $_POST['password'];
-    $confirmPassword = $_POST['confirm_password'];
+    // パスワードとパスワード確認用をセッションに保存
+    $_SESSION['password'] = $_POST['password'];
+    $_SESSION['password_confirm'] = $_POST['password_confirm'];
 
-    // パスワードが一致するか確認
-    if ($password !== $confirmPassword) {
-        $error = "パスワードとパスワード確認用が一致しません。";
-    } else {
-        // パスワードが一致した場合、確認画面にリダイレクト
-        $_SESSION['password'] = $password;
-        header("Location: confirm.php");
-        exit();
+    // confirm.phpにリダイレクト
+    header("Location:confirm.php");
+    exit(); // リダイレクト後にスクリプトを終了
     }
-
 }
 ?>
 
@@ -59,44 +56,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <h1><i class="fa-solid fa-plug fa-beat"></i>電気工事士登録<i class="fa-solid fa-plug"></i></h1>
-    <div class="subtitle">
-        <form class="login-button" method="get" action="login.php">
-            <input type="submit" value="ログインページへ">
-        </form>
-        <h3>まだ登録がお隅出ない方は↓</h3>
-    </div>
     <h2>ユーザー登録フォーム</h2>
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <div class="form-row">
             <label for="name">氏名:</label>
-            <input type="text" name="name" required><p class="required"> <必須></p>
+            <input type="text" name="name" required>
         </div>
         <div class="form-row-address">
             <label for="address">住所:</label>
-            <input type="text" name="name" required><p class="required"> <必須></p>
+            <input type="text" name="address" required>
         </div>
         <div class="form-row">
             <label for="phone">連絡先（電話番号）:</label>
-            <input type="text" name="phone" required><p class="required"> <必須></p>
+            <input type="text" name="phone" required>
         </div>
         <div class="form-row">
             <label for="email">連絡先（E-mail）:</label>
             <input type="email" name="email">
         </div>
-                <!-- パスワード入力 -->
-            <div class="form-row">
+        <div class="form-row">
             <label for="password">パスワード:</label>
             <input type="password" name="password" required>
-            <label for="confirm_password">パスワード確認:</label>
-            <input type="password" name="confirm_password" required>
+
+            <label for="password_confirm">パスワード確認:</label>
+            <input type="password" name="password_confirm" required>
         </div>
-
-        <!-- エラーメッセージ -->
-        <?php if ($error): ?>
-        <div class="error-message"><?php echo $error; ?></div>
-        <?php endif; ?>
-
-
 
         <div class="form-row">
             <span class="era-label">生年月日:</span>
@@ -128,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         echo "<option value='$i'>$i</option>";
                     }
                     ?>
-                </select>日<p class="required"> <必須></p>
+                </select>日
             </div>
         </div>
         <div class="form-row">
@@ -152,6 +136,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <input type="submit" value="確認">
     </form>
-    
+    <form class="login-button-form" method="get" action="login.php">
+        <input type="submit" value="ログインページへ">
+    </form>
 </body>
 </html>
