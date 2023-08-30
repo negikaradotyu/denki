@@ -1,0 +1,131 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+p{
+    margin: 0;
+}
+
+h1 {
+    background-color: #007bff;
+    color: #fff;
+    padding: 20px;
+    margin: 0;
+    text-align: center;
+}
+
+h2 {
+    margin: 10px 0;
+    text-align: center;
+}
+
+form {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form select,
+form input[type="submit"] {
+    padding: 5px 10px;
+    margin:  0 10px 10px 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+.form-row-address input[type="text"]{
+    width: 75%;
+    display:flex;
+}
+
+.form-row-address{
+    display:flex;
+}
+
+form select {
+    height: 35px;
+}
+
+form input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background-color: #0056b3;
+    width: 30px;
+}
+
+.subtitle{
+    text-align: center;
+    align-items: center;
+}
+
+.login-button {
+    margin: 5px;
+    width: 150px;
+    padding: 0;
+    border: none;
+    background-color: #f4f4f4;
+    display: inline-block;
+
+}
+h3{
+    margin: 0;
+    color: crimson;
+}
+
+.login-button input[type="submit"] {
+    background-color: #28a745;
+}
+
+.login-button input[type="submit"]:hover {
+    background-color: #1e7e34;
+}
+
+/* 年、月、日を横一列に */
+.date-input {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+/* 昭和と平成の文字サイズを80%に */
+.yearType option{
+    width: 30px;
+
+}
+
+/* 項目名と入力フィールドを一列に */
+.form-row {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+/* チェックボックスのスタイル */
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+
+.checkbox-group label {
+    margin-right: 5px;
+}
+
+.fa-solid{
+    margin: 5px;
+}
